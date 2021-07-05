@@ -1,11 +1,10 @@
 import base64
 import hashlib
 import sys
-
 from cryptography.fernet import Fernet, InvalidToken
 
 
-def encrypt(password: str = None, to_encrypt: str = None):
+def encrypt(password: str = None, to_encrypt: str = None, computer=False):
     if password is None:
         password = input('PASSWORD: ')
     if to_encrypt is None:
@@ -15,7 +14,7 @@ def encrypt(password: str = None, to_encrypt: str = None):
     return [result, f'Token: {result}']
 
 
-def decrypt(password: str = None, to_decrypt: str = None):
+def decrypt(password: str = None, to_decrypt: str = None, computer=False):
     if password is None:
         password = input('PASSWORD: ')
     if to_decrypt is None:
@@ -26,7 +25,10 @@ def decrypt(password: str = None, to_decrypt: str = None):
                                                     .digest()[:32])).decrypt(bytes(to_decrypt.encode())).decode()
             return [token, f'Message: {token}']
         except InvalidToken:
-            print('INVALID TOKEN\nTry checking the password and the tokem')
+            if not computer:
+                print('INVALID TOKEN\nTry checking the password and the token')
+            elif computer:
+                return ['NO VALID TOKEN', 'INVALID TOKEN\nTry checking the password and the token']
             continue
 
 
@@ -46,11 +48,12 @@ if __name__ == '__main__':
         elif choice == 'ENCODE':
             print(encrypt()[1])
 
+
 class ShortVersion:
     @staticmethod
-    def encode(password: str, to_encrypt:str):
+    def encode(password: str, to_encrypt: str):
         return Fernet(base64.urlsafe_b64encode(hashlib.sha3_512(password.encode())
-                                                 .digest()[:32])).encrypt(bytes(to_encrypt.encode())).decode()
+                                               .digest()[:32])).encrypt(bytes(to_encrypt.encode())).decode()
 
     @staticmethod
     def decode(password: str, to_decrypt: str):
