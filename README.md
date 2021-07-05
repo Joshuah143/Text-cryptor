@@ -6,3 +6,18 @@ The whole top bit is kinda long winded so that it will work slightly better from
 email me if you have any issues: [joshua.himmens@gmail.com](mailto:joshua.himmens@gmail.com)
 
 P.S. I actually think this might be decently secure. (if you think cryptography.fernet is secure)
+
+
+Also i just want to calrify with the GUI version:
+
+Do i know how to use TKinter?
+
+###### no
+
+Is it a steaming pile of trash?
+
+###### also yes
+
+Does it work?
+
+###### by some miracle 
